@@ -12,8 +12,8 @@ build: aes.o memory_view.o XYZ3W.o
 
 
 unittest: aes.o memory_view.o XYZ3W.o unity.o
-	$(CC) -o test_memory_view $(TEST_DIR)/test_memory_view.c unity.o memory_view.o -I$(SRC_DIR) $(LINK_FLAGS) && ./test_memory_view
-	$(CC) -o test_XYZ3W $(TEST_DIR)/test_XYZ3W.c unity.o aes.o memory_view.o XYZ3W.o -I$(SRC_DIR) $(LINK_FLAGS) && ./test_XYZ3W
+	$(CC) -o test_memory_view.out $(TEST_DIR)/test_memory_view.c unity.o memory_view.o -I$(SRC_DIR) $(LINK_FLAGS) && ./test_memory_view.out
+	$(CC) -o test_XYZ3W.out $(TEST_DIR)/test_XYZ3W.c unity.o aes.o memory_view.o XYZ3W.o -I$(SRC_DIR) $(LINK_FLAGS) && ./test_XYZ3W.out
 
 
 aes.o:
