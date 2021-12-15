@@ -25,15 +25,33 @@ NL (preferito) oppure NL + CR
 
 Chiameremo *tipo* il primo carattere di ogni token e *valore* il numero immediatamente successivo.
 Si individuano due classi di token in base al tipo:
-  . Istruzioni: [GM]
+  . Comandi: [GM]
   . Parametri: [FSXYZ]
+
+Si noti che tra il tipo e il valore non sono presenti spazi, questa scelta semplifica l'operazione di parsing.
 
 
 ## Linea
-Ogni linea di gcode che non sia vuota, privata degli eventuali commenti, contiene un'instruzione seguita da zero o più parametri, separati da spazi. Ogni istruzione specifica quanti e quali parametri accettare. L'ordine dei parametri è irrilevante (?).
+Ogni linea di gcode che non sia vuota, privata degli eventuali commenti e degli spazi in testa e in coda, contiene un'instruzione seguita da zero o più parametri, separati da spazi. Ogni comando specifica quanti e quali parametri accettare. L'ordine dei parametri è irrilevante.
 
 
-# 1001 modi per rompere la macchina
+## Grammatica
+Ora ci sono tutti gli elementi per definire una grammatica del gcode. Questa è un sottoinsieme della grammatica dei gcode Marlin-flavoured, ciò significa che un gcode sintatticamente corretto per questa grammatica sarà compatibile con tutte le macchine con firmware Marlin.
+
+Di seguito la BNF (se mi ricordo come si fa):
+
+	whitespace	:= ' '
+	end_of_line	:= (\r)?\n
+	commento	:= ;.*
+
+	token		:= [FGMSXYZ](0|-?[1-9][0-9]*)(.[0-9]+)?
+	token_list	:= token (whitespace+ token)*
+
+	line		:= whitespace* token_list? commento? end_of_line
+
+NOTA: si potrebbe anche avere una versione ricorsiva della token_list.
+
+
 ## Errori sintattici
 Se la macchina riceve dei comandi sintatticamente errati a seconda del firmware potrebbe:
 
@@ -42,7 +60,7 @@ Se la macchina riceve dei comandi sintatticamente errati a seconda del firmware 
 
 
 ## Istruzioni non implementate dalla macchina
-L'esecuzione di un'istruzione non supportata è *undefined behavior*
+L'esecuzione di un'istruzione non supportata è *undefined behavior*.
 
 
 ## Errori di floating point
@@ -54,11 +72,11 @@ Sebbene i commenti non siano rilevanti, la loro massiccia presenza potrebbe rall
 
 
 ## Vincoli spaziali della macchina
-Le istruzioni gcode potrebbero portare la macchina fuori dal volume di lavoro.
+Le istruzioni gcode potrebbero portare la macchina fuori dal volume di lavoro, che non significa necessariamente che la macchina non può raggiungere il punto specificato, ma il firmware potrebbe rifiutare il comando e fallire.
 
 
 ## Feed rate
-Il feed rate per le istruzioni di movimento specifica la velocità della toolhead. Ogni macchina, in base al tipo di motori utilizzati e alla tecnologia di movimento, ammette una velocità massima oltre la quale è pericoloso operare.
+Il feed rate per i comandi di movimento specifica la velocità della toolhead. Ogni macchina, in base al tipo di motori utilizzati e alla tecnologia di movimento, ammette una velocità massima oltre la quale è pericoloso operare.
 
 
 ## Temperature di utilizzo
