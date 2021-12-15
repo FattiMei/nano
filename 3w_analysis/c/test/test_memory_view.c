@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "Unity/src/unity.h"
+#include "unity.h"
 #include "memory_view.h"
 
 

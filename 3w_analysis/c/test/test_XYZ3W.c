@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "Unity/src/unity.h"
+#include "unity.h"
 #include "XYZ3W.h"
 #include "memory_view.h"
 
