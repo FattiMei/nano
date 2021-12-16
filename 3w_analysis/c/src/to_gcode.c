@@ -45,6 +45,8 @@ int main(int argc, char *argv[]){
 				struct memory_view mv = convert_3w_to_gcode(buf, decompose_3w_file(file_buf));
 
 				mv_dump_to_stream(mv, stdout);
+
+				free(buf);
 			}
 		}
 	}

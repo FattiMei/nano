@@ -4,6 +4,9 @@ CC = gcc
 SRC_DIR = /home/pi/nano/3w_analysis/c/src
 TEST_DIR = /home/pi/nano/3w_analysis/c/test
 
+XYZ_DIR=/home/pi/nano/3w_files
+CMP_DIR=/home/pi/nano/3w_analysis/regression_test
+TO_GCODE_EXE=/home/pi/nano/3w_analysis/c/build/to_gcode.out
 
 LINK_FLAGS = -lz -lnettle
 
@@ -16,6 +19,11 @@ unittest: aes.o memory_view.o XYZ3W.o unity.o
 	$(CC) -o test_XYZ3W.out $(TEST_DIR)/test_XYZ3W.c unity.o aes.o memory_view.o XYZ3W.o -I$(SRC_DIR) $(LINK_FLAGS) && ./test_XYZ3W.out
 
 
+regression_test: build to_gcode.o
+	$(CC) -o to_gcode.out aes.o memory_view.o XYZ3W.o to_gcode.o -I$(SRC_DIR) $(LINK_FLAGS)
+	bash convert_to_gcode.sh
+
+
 aes.o:
 	$(CC) -c $(SRC_DIR)/aes.c
 
@@ -26,6 +34,10 @@ memory_view.o:
 
 XYZ3W.o:
 	$(CC) -c $(SRC_DIR)/XYZ3W.c
+
+
+to_gcode.o:
+	$(CC) -c $(SRC_DIR)/to_gcode.c
 
 
 unity.o:
