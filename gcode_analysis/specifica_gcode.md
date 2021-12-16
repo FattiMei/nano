@@ -21,7 +21,7 @@ NL (preferito) oppure NL + CR
 
 
 ## Token
-  `[FGMSXYZ](0|-?[1-9][0-9]*)(.[0-9]+)?`
+ `[FGMSXYZ](-?0|[1-9][0-9]*)(\.[0-9]+)?`
 
 Chiameremo *tipo* il primo carattere di ogni token e *valore* il numero immediatamente successivo.
 Si individuano due classi di token in base al tipo:
@@ -44,12 +44,13 @@ Di seguito la BNF (se mi ricordo come si fa):
 	end_of_line	:= (\r)?\n
 	commento	:= ;.*
 
-	token		:= [FGMSXYZ](0|-?[1-9][0-9]*)(.[0-9]+)?
+	token		:= [FGMSXYZ](-?0|[1-9][0-9]*)(\.[0-9]+)?
 	token_list	:= token (whitespace+ token)*
 
 	line		:= whitespace* token_list? commento? end_of_line
 
 NOTA: si potrebbe anche avere una versione ricorsiva della token_list.
+NOTA: Per quanto riguarda i token comando, è importante distinguere tra 'G20' e 'G20.0' o 'G20.1'.
 
 
 ## Errori sintattici
