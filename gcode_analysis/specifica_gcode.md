@@ -21,12 +21,12 @@ NL (preferito) oppure NL + CR
 
 
 ## Token
- `[FGMSXYZ](-?0|[1-9][0-9]*)(\.[0-9]+)?`
+ `[EFGMSXYZ](-?0|[1-9][0-9]*)(\.[0-9]+)?`
 
 Chiameremo *tipo* il primo carattere di ogni token e *valore* il numero immediatamente successivo.
 Si individuano due classi di token in base al tipo:
   . Comandi: [GM]
-  . Parametri: [FSXYZ]
+  . Parametri: [EFSXYZ]
 
 Si noti che tra il tipo e il valore non sono presenti spazi, questa scelta semplifica l'operazione di parsing.
 
@@ -44,7 +44,7 @@ Di seguito la BNF (se mi ricordo come si fa):
 	end_of_line	:= (\r)?\n
 	commento	:= ;.*
 
-	token		:= [FGMSXYZ](-?0|[1-9][0-9]*)(\.[0-9]+)?
+	token		:= [EFGMSXYZ](-?0|[1-9][0-9]*)(\.[0-9]+)?
 	token_list	:= token (whitespace+ token)*
 
 	line		:= whitespace* token_list? commento? end_of_line
