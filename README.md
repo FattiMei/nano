@@ -17,17 +17,32 @@ Many XYZ machines work only with 3w files that are obfuscated gcode. If you want
 
 
 ### Python script
-The scripts I wrote needs:
+The scripts I wrote need:
 
-  * Python 3
-  * pycryptodome
+  * python 3
+  * pycryptodome (`pip install pycryptodome`)
   * patience
 
 At the moment I support only version 5 of the format, if you have any problem contact me at: teomei68 ''at'' gmail ''dot'' com.
 
   `python /nano/3w_analysis/python/to_gcode.py <filename>`
 
-Converts a 3w file to gcode and dumps to stout. If the file does not follow the specification, you will see some stack traces.
+Converts a 3w file to gcode and dumps to stdout. If the file does not follow the specification, you will see some stack traces.
+
+
+### C program
+If you want *speed* I've got some C programs for you.
+Dependencies:
+
+  * Nettle
+  * Zlib (probably already installed on your system)
+  * Make
+  * More patience
+
+Go to `/nano/3w_analysis/c/build` and `make clean build`. This step might fail because the compiler can't find the header files, you're on your own.
+After that `make regression_test` will produce a to_gcode.out native executable, it works exactly like the python script.
+
+  `./to_gcode.out <filename>`
 
 
 ## Open filament
@@ -37,7 +52,7 @@ We want to solve this problem either by reverse-engineering the OpenSmartTag or 
 
 
 ## New firmware
-How about cleansing the machine an installing a new firmware? Sound cool.
+How about cleansing the machine and installing a new firmware? Sound cool.
 This is the most difficult part of the job, since we don't know yet the motherboard layout. I consider two options:
 
   1. Repetier firmware, following instructions on online forums (Boring)

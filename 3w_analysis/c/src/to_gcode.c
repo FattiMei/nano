@@ -44,7 +44,10 @@ int main(int argc, char *argv[]){
 				struct memory_view file_buf = {buf, size};
 				struct memory_view mv = convert_3w_to_gcode(buf, decompose_3w_file(file_buf));
 
-				mv_dump_to_stream(mv, stdout);
+				if(mv.data != NULL)
+					mv_dump_to_stream(mv, stdout);
+				else
+					fprintf(stderr, "File does not follow 3w specification V5");
 
 				free(buf);
 			}
